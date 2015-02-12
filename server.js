@@ -16,6 +16,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+passport.serializeUser(function(user, done) {
+	done(null, user);
+});
+passport.deserializeUser(function(obj, done) {
+	done(null, obj);
+});
 
 passport.use(new GitHubStrategy({
     clientID: 'e5086818e79064b4dbcd',
@@ -28,6 +34,21 @@ passport.use(new GitHubStrategy({
     });
   }
 ));
+
+
+app.get('/auth/github', passport.authenticate('github'));
+app.get('/auth/github/callback', passport.authenticate('github', {
+	failureRedirect: '/'
+}, function(err, data) {
+	if (!err) {
+		console.log('You should be logged in');
+		res.redirect('/#/home');
+	} else {
+		console.log(err);
+		console.log('Something is wrong');
+	}
+}));
+
 
 app.listen(port, function() {
 	console.log('Listening on port ' + port);
