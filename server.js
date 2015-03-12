@@ -25,7 +25,7 @@ var isAuthed = function(req, res, next) {
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(session({
-	secret: 'a8we35ga35sjr8yj6a3a3554h6a8at5h3a1eh86ja5te1ae'
+	secret: 'itzaseekrit'
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -38,8 +38,8 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new GitHubStrategy({
-    clientID: 'e5086818e79064b4dbcd',
-    clientSecret: '6449d0afc66ef2d3a22220e2d78934c07c0ab56d',
+    clientID: 'CLIENT_ID',
+    clientSecret: 'CLIENT_SECRET',
     callbackURL: "http://127.0.0.1:8080/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
